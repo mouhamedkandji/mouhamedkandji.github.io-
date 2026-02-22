@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — Mouhamed Kandji</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#0a0a0a;--off:#111111;--surface:#161616;--border:#2a2a2a;
+  --muted:#555555;--text:#e8e2d9;--cream:#f0e8d8;--gold:#c9a84c;--gold2:#e8c97a;
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'DM Sans',sans-serif;
+  --mono:'Space Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--text);font-family:var(--sans);font-weight:300;line-height:1.7;cursor:none;overflow-x:hidden}
+
+/* CURSOR */
+#cur{position:fixed;width:10px;height:10px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .15s}
+#cur-r{position:fixed;width:36px;height:36px;border:1px solid rgba(201,168,76,.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .3s,height .3s,border-color .3s}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:26px 60px;transition:background .4s,padding .4s}
+nav.sc{background:rgba(10,10,10,.94);backdrop-filter:blur(14px);padding:15px 60px;border-bottom:1px solid var(--border)}
+.nlogo{font-family:var(--serif);font-size:1.15rem;font-weight:700;color:var(--cream);text-decoration:none}
+.nlogo span{color:var(--gold)}
+.nlinks{display:flex;gap:38px;list-style:none}
+.nlinks a{font-family:var(--mono);font-size:.7rem;color:var(--muted);text-decoration:none;letter-spacing:.15em;text-transform:uppercase;transition:color .2s;position:relative}
+.nlinks a::after{content:'';position:absolute;bottom:-4px;left:0;right:100%;height:1px;background:var(--gold);transition:right .3s}
+.nlinks a:hover{color:var(--cream)}
+.nlinks a:hover::after{right:0}
+.ncta{font-family:var(--mono);font-size:.7rem;color:var(--gold);text-decoration:none;letter-spacing:.15em;text-transform:uppercase;border:1px solid var(--gold);padding:9px 20px;transition:background .25s,color .25s}
+.ncta:hover{background:var(--gold);color:var(--black)}
+
+/* HERO */
+#hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;position:relative;overflow:hidden}
+.hl{display:flex;flex-direction:column;justify-content:center;padding:160px 70px 100px 100px;position:relative;z-index:2}
+.eyebrow{font-family:var(--mono);font-size:.7rem;color:var(--gold);letter-spacing:.25em;text-transform:uppercase;margin-bottom:26px;display:flex;align-items:center;gap:14px;opacity:0;animation:fu .8s .2s forwards}
+.eyebrow::before{content:'';display:block;width:38px;height:1px;background:var(--gold)}
+h1.hname{font-family:var(--serif);font-size:clamp(3rem,5.2vw,5.8rem);font-weight:900;line-height:.95;color:var(--cream);margin-bottom:14px;opacity:0;animation:fu .9s .35s forwards}
+h1.hname em{font-style:italic;color:var(--gold);display:block}
+.htitle{font-family:var(--mono);font-size:.75rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:32px;opacity:0;animation:fu .9s .5s forwards}
+.hdesc{font-size:1rem;color:#8a8070;max-width:440px;line-height:1.9;margin-bottom:48px;opacity:0;animation:fu .9s .65s forwards}
+.hbtns{display:flex;gap:14px;flex-wrap:wrap;opacity:0;animation:fu .9s .8s forwards}
+.bp{display:inline-flex;align-items:center;gap:10px;background:var(--gold);color:var(--black);padding:14px 32px;text-decoration:none;font-family:var(--mono);font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;font-weight:700;transition:background .25s,transform .2s}
+.bp:hover{background:var(--gold2);transform:translateY(-2px)}
+.bo{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--border);color:var(--text);padding:14px 32px;text-decoration:none;font-family:var(--mono);font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;transition:border-color .25s,color .25s}
+.bo:hover{border-color:var(--gold);color:var(--gold)}
+.hr{position:relative;overflow:hidden}
+.hr img{width:100%;height:100%;object-fit:cover;object-position:center top;opacity:0;animation:fi 1.2s .5s forwards;filter:grayscale(15%) contrast(1.05)}
+.hr::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,var(--black) 0%,transparent 35%),linear-gradient(to top,rgba(10,10,10,.55) 0%,transparent 40%)}
+.hstats{position:absolute;bottom:48px;left:0;background:rgba(10,10,10,.88);backdrop-filter:blur(10px);border:1px solid var(--border);border-left:3px solid var(--gold);padding:20px 30px;display:flex;gap:40px;z-index:3;opacity:0;animation:fu .8s 1.1s forwards}
+.sn{font-family:var(--serif);font-size:1.9rem;font-weight:700;color:var(--gold);line-height:1;display:block}
+.sl{font-family:var(--mono);font-size:.58rem;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;margin-top:3px}
+.hscroll{position:absolute;bottom:48px;left:100px;display:flex;align-items:center;gap:12px;z-index:2;opacity:0;animation:fu .8s 1.3s forwards}
+.sline{width:1px;height:52px;background:var(--border);position:relative;overflow:hidden}
+.sline::after{content:'';position:absolute;top:0;left:0;right:0;height:35%;background:var(--gold);animation:sd 2s infinite}
+@keyframes sd{0%{transform:translateY(-100%)}100%{transform:translateY(380%)}}
+.stxt{font-family:var(--mono);font-size:.6rem;color:var(--muted);letter-spacing:.2em;text-transform:uppercase;writing-mode:vertical-lr}
+
+/* MARQUEE */
+.mwrap{background:var(--gold);padding:13px 0;overflow:hidden;white-space:nowrap}
+.mtrack{display:inline-flex;animation:mq 22s linear infinite}
+.mi{font-family:var(--mono);font-size:.72rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--black);padding:0 34px}
+.dot{color:rgba(0,0,0,.3)}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* SECTION BASE */
+section{padding:110px 100px}
+.stag{font-family:var(--mono);font-size:.67rem;color:var(--gold);letter-spacing:.25em;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:14px}
+.stag::before{content:'';display:block;width:26px;height:1px;background:var(--gold)}
+h2.st{font-family:var(--serif);font-size:clamp(1.9rem,3vw,2.9rem);font-weight:700;color:var(--cream);line-height:1.15;margin-bottom:52px}
+h2.st em{font-style:italic;color:var(--gold)}
+
+/* SERVICES */
+#services{background:var(--off);border-top:1px solid var(--border)}
+.sgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border)}
+.sc2{background:var(--off);padding:42px 36px;position:relative;overflow:hidden;transition:background .3s}
+.sc2::after{content:'';position:absolute;bottom:0;left:0;right:100%;height:2px;background:var(--gold);transition:right .4s}
+.sc2:hover{background:var(--surface)}
+.sc2:hover::after{right:0}
+.snum{font-family:var(--mono);font-size:.62rem;color:var(--muted);letter-spacing:.2em;margin-bottom:24px}
+.sico{font-size:1.7rem;margin-bottom:20px;display:block}
+.sname{font-family:var(--serif);font-size:1.25rem;font-weight:700;color:var(--cream);margin-bottom:12px}
+.sdesc{font-size:.88rem;color:var(--muted);line-height:1.75}
+
+/* GALERIE */
+#galerie{background:var(--black);padding:110px 0}
+.gh{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:48px;padding:0 100px}
+.gfilter{display:flex;gap:3px}
+.fb{font-family:var(--mono);font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;background:none;border:1px solid var(--border);color:var(--muted);padding:9px 17px;cursor:none;transition:all .2s}
+.fb:hover,.fb.active{background:var(--gold);border-color:var(--gold);color:var(--black)}
+.ggrid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px}
+.gi{position:relative;overflow:hidden;cursor:none;background:var(--surface)}
+.gi.tall{grid-row:span 2}
+.gi img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .55s,filter .4s;filter:grayscale(8%)}
+.gi:hover img{transform:scale(1.07);filter:grayscale(0%)}
+.gov{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,10,.9) 0%,rgba(10,10,10,.1) 50%,transparent 100%);opacity:0;transition:opacity .35s;display:flex;flex-direction:column;justify-content:flex-end;padding:20px 18px}
+.gi:hover .gov{opacity:1}
+.gtitle{font-family:var(--serif);font-size:.95rem;font-weight:700;color:var(--cream);margin-bottom:4px}
+.gtag{font-family:var(--mono);font-size:.58rem;color:var(--gold);letter-spacing:.12em;text-transform:uppercase}
+
+/* EXPÉRIENCES */
+#exp{background:var(--off);border-top:1px solid var(--border)}
+.egrid{display:grid;grid-template-columns:1fr 1.5fr;gap:88px;align-items:start}
+.esb{position:sticky;top:110px}
+.eintro{font-size:.97rem;color:var(--muted);line-height:1.9;margin-bottom:40px}
+.sw{display:flex;flex-wrap:wrap;gap:8px}
+.sk{font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--border);padding:6px 13px;color:var(--muted);transition:all .2s;cursor:default}
+.sk:hover{border-color:var(--gold);color:var(--gold)}
+.elist{display:flex;flex-direction:column;gap:2px}
+.ei{border:1px solid var(--border);background:var(--surface);position:relative;overflow:hidden;transition:border-color .3s}
+.ei::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--gold);transform:scaleY(0);transition:transform .4s;transform-origin:bottom}
+.ei:hover{border-color:var(--gold)}
+.ei:hover::before{transform:scaleY(1)}
+.einner{padding:28px 36px;display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:start}
+.elogo{width:64px;height:64px;object-fit:contain;background:#fff;padding:7px;border-radius:2px;flex-shrink:0}
+.eco{font-family:var(--serif);font-size:1.4rem;font-weight:700;color:var(--cream);margin-bottom:3px}
+.erole{font-family:var(--mono);font-size:.68rem;color:var(--gold);letter-spacing:.13em;text-transform:uppercase}
+.eper{font-family:var(--mono);font-size:.6rem;color:var(--muted);border:1px solid var(--border);padding:5px 11px;white-space:nowrap;margin-top:3px}
+.edesc{font-size:.9rem;color:#5a5045;line-height:1.8;padding:0 36px 26px;border-top:1px solid var(--border);padding-top:18px}
+
+/* À PROPOS */
+#ap{background:var(--black)}
+.agrid{display:grid;grid-template-columns:1fr 1fr;gap:88px;align-items:center}
+.aimgs{display:grid;grid-template-columns:1fr 1fr;gap:5px;position:relative}
+.aim{grid-column:span 2;height:320px;overflow:hidden}
+.aim img,.ais img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}
+.aim:hover img,.ais:hover img{transform:scale(1.04)}
+.ais{height:185px;overflow:hidden}
+.abadge{position:absolute;bottom:-18px;right:-18px;width:124px;height:124px;background:var(--gold);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:2}
+.bnum{font-family:var(--serif);font-size:2.5rem;font-weight:900;color:var(--black);line-height:1}
+.btext{font-family:var(--mono);font-size:.54rem;letter-spacing:.1em;text-transform:uppercase;color:var(--black);text-align:center;margin-top:3px}
+.ac p{font-size:.97rem;color:var(--muted);line-height:1.9;margin-bottom:20px}
+.ac p strong{color:var(--cream);font-weight:500}
+.aquote{border-left:2px solid var(--gold);padding:16px 24px;margin:32px 0;background:rgba(201,168,76,.06)}
+.aquote p{font-family:var(--serif);font-size:1.1rem;font-style:italic;color:var(--cream);margin:0;line-height:1.6}
+.vgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-top:52px}
+.vc{background:var(--surface);padding:30px 26px}
+.vico{font-size:1.4rem;margin-bottom:12px}
+.vname{font-family:var(--serif);font-size:1.05rem;font-weight:700;color:var(--cream);margin-bottom:9px}
+.vdesc{font-size:.87rem;color:var(--muted);line-height:1.7}
+
+/* CONTACT */
+#contact{background:var(--off);border-top:1px solid var(--border)}
+.cgrid{display:grid;grid-template-columns:1fr 1fr;gap:88px;align-items:start}
+.ci h3{font-family:var(--serif);font-size:1.1rem;color:var(--cream);font-weight:400;margin-bottom:36px;line-height:1.75}
+.clinks{display:flex;flex-direction:column;gap:9px}
+.cl{display:flex;align-items:center;gap:16px;text-decoration:none;color:var(--muted);padding:15px 20px;border:1px solid var(--border);font-family:var(--mono);font-size:.74rem;letter-spacing:.08em;transition:all .25s;position:relative;overflow:hidden}
+.cl::before{content:'';position:absolute;left:0;top:0;bottom:0;width:0;background:var(--gold);transition:width .3s;z-index:0}
+.cl:hover{color:var(--black);border-color:var(--gold)}
+.cl:hover::before{width:100%}
+.cl span,.cl .ci2{position:relative;z-index:1}
+.cf{display:flex;flex-direction:column;gap:16px}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.fg{display:flex;flex-direction:column;gap:6px}
+.fg label{font-family:var(--mono);font-size:.62rem;color:var(--muted);letter-spacing:.17em;text-transform:uppercase}
+.fg input,.fg textarea,.fg select{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:12px 15px;font-family:var(--sans);font-size:.87rem;outline:none;transition:border-color .2s;cursor:none;width:100%;appearance:none}
+.fg input:focus,.fg textarea:focus,.fg select:focus{border-color:var(--gold)}
+.fg textarea{resize:vertical;min-height:115px}
+.fg select option{background:var(--surface)}
+.bsend{display:inline-flex;align-items:center;gap:11px;background:var(--gold);color:var(--black);padding:15px 36px;border:none;font-family:var(--mono);font-size:.73rem;letter-spacing:.18em;text-transform:uppercase;font-weight:700;cursor:none;transition:background .25s,transform .2s;align-self:flex-start}
+.bsend:hover{background:var(--gold2);transform:translateY(-2px)}
+#fok{display:none;font-family:var(--mono);font-size:.72rem;color:var(--gold);margin-top:9px;letter-spacing:.1em}
+
+/* FOOTER */
+footer{background:var(--black);border-top:1px solid var(--border);padding:42px 100px;display:flex;align-items:center;justify-content:space-between}
+.flogo{font-family:var(--serif);font-size:1rem;font-weight:700;color:var(--cream)}
+.flogo span{color:var(--gold)}
+.fcopy{font-family:var(--mono);font-size:.62rem;color:var(--muted);letter-spacing:.1em}
+.flinks{display:flex;gap:16px}
+.flinks a{font-family:var(--mono);font-size:.62rem;color:var(--muted);text-decoration:none;letter-spacing:.12em;text-transform:uppercase;transition:color .2s}
+.flinks a:hover{color:var(--gold)}
+
+/* ANIM */
+@keyframes fu{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+.rv{opacity:0;transform:translateY(34px);transition:opacity .7s,transform .7s}
+.rv.vis{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  nav{padding:20px 40px}nav.sc{padding:13px 40px}
+  section{padding:80px 40px}
+  #galerie{padding:80px 0}
+  .gh{padding:0 40px}
+  #hero{grid-template-columns:1fr;min-height:auto}
+  .hl{padding:130px 40px 60px}
+  .hr{height:60vw}
+  .sgrid{grid-template-columns:1fr 1fr}
+  .ggrid{grid-template-columns:repeat(3,1fr)}
+  .egrid,.agrid,.cgrid{grid-template-columns:1fr;gap:56px}
+  .esb{position:static}
+  footer{padding:34px 40px;flex-direction:column;gap:18px;text-align:center}
+  .vgrid{grid-template-columns:1fr}
+}
+@media(max-width:640px){
+  nav{padding:16px 20px}nav.sc{padding:11px 20px}
+  .nlinks{display:none}
+  section{padding:56px 20px}
+  #galerie{padding:56px 0}
+  .gh{flex-direction:column;align-items:flex-start;gap:18px;padding:0 20px}
+  .ggrid{grid-template-columns:1fr 1fr}
+  .sgrid{grid-template-columns:1fr}
+  .fr{grid-template-columns:1fr}
+  footer{padding:26px 20px}
+  .aimgs{grid-template-columns:1fr}
+  .aim{grid-column:span 1}
+}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="cur-r"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nlogo">M<span>.</span>Kandji</a>
+  <ul class="nlinks">
+    <li><a href="#galerie">Portfolio</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#exp">Expériences</a></li>
+    <li><a href="#ap">À Propos</a></li>
+  </ul>
+  <a href="#contact" class="ncta">Contact</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hl">
+    <div class="eyebrow">Graphic Designer &amp; Digital Strategist</div>
+    <h1 class="hname">Mouhamed<em>Kandji.</em></h1>
+    <p class="htitle">Dakar, Sénégal &nbsp;·&nbsp; Disponible</p>
+    <p class="hdesc">Je conçois des identités visuelles, contenus digitaux et campagnes créatives qui aident les marques à gagner en visibilité, en cohérence et en impact sur leurs audiences.</p>
+    <div class="hbtns">
+      <a href="#galerie" class="bp">Voir le Portfolio →</a>
+      <a href="#contact" class="bo">Me Contacter</a>
+    </div>
+  </div>
+  <div class="hr">
+    <img src="https://custom-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_limit,fl_lossy,h_300,w_300,f_auto,q_auto/23849964/780009_746152.png" alt="Mouhamed Kandji">
+    <div class="hstats">
+      <div><span class="sn">3+</span><span class="sl">Entreprises</span></div>
+      <div><span class="sn">50+</span><span class="sl">Projets</span></div>
+      <div><span class="sn">5</span><span class="sl">Ans exp.</span></div>
+    </div>
+  </div>
+  <div class="hscroll"><div class="sline"></div><span class="stxt">Défiler</span></div>
+</section>
+
+<!-- MARQUEE -->
+<div class="mwrap"><div class="mtrack">
+  <span class="mi">Graphic Design <span class="dot">✦</span></span>
+  <span class="mi">Identité Visuelle <span class="dot">✦</span></span>
+  <span class="mi">Community Management <span class="dot">✦</span></span>
+  <span class="mi">Content Creation <span class="dot">✦</span></span>
+  <span class="mi">Stratégie Digitale <span class="dot">✦</span></span>
+  <span class="mi">Branding <span class="dot">✦</span></span>
+  <span class="mi">Motion Design <span class="dot">✦</span></span>
+  <span class="mi">Campagnes 360° <span class="dot">✦</span></span>
+  <span class="mi">Graphic Design <span class="dot">✦</span></span>
+  <span class="mi">Identité Visuelle <span class="dot">✦</span></span>
+  <span class="mi">Community Management <span class="dot">✦</span></span>
+  <span class="mi">Content Creation <span class="dot">✦</span></span>
+  <span class="mi">Stratégie Digitale <span class="dot">✦</span></span>
+  <span class="mi">Branding <span class="dot">✦</span></span>
+  <span class="mi">Motion Design <span class="dot">✦</span></span>
+  <span class="mi">Campagnes 360° <span class="dot">✦</span></span>
+</div></div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="stag rv">Ce que je fais</div>
+  <h2 class="st rv">Services &amp; <em>Expertises</em></h2>
+  <div class="sgrid">
+    <div class="sc2 rv"><div class="snum">01</div><span class="sico">✦</span><h3 class="sname">Identité Visuelle</h3><p class="sdesc">Logos, chartes graphiques, systèmes visuels cohérents pour rendre votre marque immédiatement reconnaissable.</p></div>
+    <div class="sc2 rv d1"><div class="snum">02</div><span class="sico">◈</span><h3 class="sname">Contenus Digitaux</h3><p class="sdesc">Visuels pour réseaux sociaux, campagnes pub, newsletters et supports numériques à fort impact visuel.</p></div>
+    <div class="sc2 rv d2"><div class="snum">03</div><span class="sico">⬡</span><h3 class="sname">Community Management</h3><p class="sdesc">Animation de communautés en ligne, stratégie éditoriale et création de contenu adapté à chaque plateforme.</p></div>
+    <div class="sc2 rv"><div class="snum">04</div><span class="sico">◐</span><h3 class="sname">Stratégie Digitale</h3><p class="sdesc">Positionnement de marque, plan de communication et accompagnement dans votre présence en ligne.</p></div>
+    <div class="sc2 rv d1"><div class="snum">05</div><span class="sico">△</span><h3 class="sname">Print &amp; Supports</h3><p class="sdesc">Flyers, affiches, brochures, packaging — tous supports print respectant votre charte graphique.</p></div>
+    <div class="sc2 rv d2"><div class="snum">06</div><span class="sico">○</span><h3 class="sname">Direction Artistique</h3><p class="sdesc">Supervision créative, brief, coordination équipes et cohérence visuelle sur l'ensemble de vos projets.</p></div>
+  </div>
+</section>
+
+<!-- GALERIE -->
+<section id="galerie">
+  <div class="gh rv">
+    <div>
+      <div class="stag" style="margin-bottom:14px">Galerie des Créations</div>
+      <h2 class="st" style="margin-bottom:0">Mes <em>Projets</em></h2>
+    </div>
+    <div class="gfilter">
+      <button class="fb active" onclick="filterG(this,'all')">Tout</button>
+      <button class="fb" onclick="filterG(this,'branding')">Branding</button>
+      <button class="fb" onclick="filterG(this,'digital')">Digital</button>
+      <button class="fb" onclick="filterG(this,'print')">Print</button>
+    </div>
+  </div>
+  <div class="ggrid" id="gg">
+    <div class="gi tall" data-c="branding"><img src="https://custom-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_limit,fl_lossy,h_9000,w_1920,f_auto,q_auto/23849964/284005_989750.jpeg" alt="Projet 1" loading="lazy"><div class="gov"><p class="gtitle">Projet Créatif 01</p><span class="gtag">Branding · Identité</span></div></div>
+    <div class="gi" data-c="digital"><img src="https://custom-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_limit,fl_lossy,h_9000,w_1920,f_auto,q_auto/23849964/132385_943773.png" alt="Projet 2" loading="lazy"><div class="gov"><p class="gtitle">Contenu Digital 02</p><span class="gtag">Digital · Social Media</span></div></div>
+    <div class="gi" data-c="print"><img src="https://custom-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_limit,fl_lossy,h_9000,w_1920,f_auto,q_auto/23849964/101519_308103.jpeg" alt="Projet 3" loading="lazy"><div class="gov"><p class="gtitle">Design Print 03</p><span class="gtag">Print · Affiche</span></div></div>
+    <div class="gi" data-c="branding"><img src="https://custom-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_limit,fl_lossy,h_9000,w_1920,f_auto,q_auto/23849964/817839_246475.jpeg" alt="Projet 4" loading="lazy"><div class="gov"><p class="gtitle">Identité Visuelle 04</p><span class="gtag">Branding · Logo</span></div></div>
+    <div class="gi tall" data-c="digital"><img src="https://custom-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_limit,fl_lossy,h_9000,w_1920,f_auto,q_auto/23849964/248643_159920.jpeg" alt="Projet 5" loading="lazy"><div class="gov"><p class="gtitle">Campagne Digitale 05</p><span class="gtag">Digital · Campagne</span></div></div>
+    <div class="gi" data-c="print"><img src="https://custom-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_limit,fl_lossy,h_9000,w_1920,f_auto,q_auto/23849964/808167_847595.jpeg" alt="Projet 6" loading="lazy"><div class="gov"><p class="gtitle">Support Print 06</p><span class="gtag">Print · Flyer</span></div></div>
+    <div class="gi" data-c="branding"><img src="https://custom-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_limit,fl_lossy,h_9000,w_1920,f_auto,q_auto/23849964/581453_660277.jpeg" alt="Projet 7" loading="lazy"><div class="gov"><p class="gtitle">Charte Graphique 07</p><span class="gtag">Branding · Charte</span></div></div>
+    <div class="gi" data-c="digital"><img src="https://custom-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_limit,fl_lossy,h_9000,w_1920,f_auto,q_auto/23849964/945122_33882.jpeg" alt="Projet 8" loading="lazy"><div class="gov"><p class="gtitle">Social Media 08</p><span class="gtag">Digital · Content</span></div></div>
+    <div class="gi tall" data-c="branding"><img src="https://custom-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_limit,fl_lossy,h_9000,w_1920,f_auto,q_auto/23849964/640448_852067.jpeg" alt="Projet 9" loading="lazy"><div class="gov"><p class="gtitle">Packaging 09</p><span class="gtag">Branding · Packaging</span></div></div>
+    <div class="gi" data-c="digital"><img src="https://custom-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_limit,fl_lossy,h_9000,w_1920,f_auto,q_auto/23849964/701494_588348.jpeg" alt="Projet 10" loading="lazy"><div class="gov"><p class="gtitle">Création Digitale 10</p><span class="gtag">Digital · Pub</span></div></div>
+    <div class="gi" data-c="print"><img src="https://custom-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_limit,fl_lossy,h_9000,w_1920,f_auto,q_auto/23849964/597394_225800.jpeg" alt="Projet 11" loading="lazy"><div class="gov"><p class="gtitle">Design Éditorial 11</p><span class="gtag">Print · Édition</span></div></div>
+    <div class="gi" data-c="branding"><img src="https://custom-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_limit,fl_lossy,h_9000,w_1920,f_auto,q_auto/23849964/308635_112583.jpeg" alt="Projet 12" loading="lazy"><div class="gov"><p class="gtitle">Identité Marque 12</p><span class="gtag">Branding · Logo</span></div></div>
+    <div class="gi tall" data-c="digital"><img src="https://custom-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_limit,fl_lossy,h_9000,w_1920,f_auto,q_auto/23849964/777996_220260.jpeg" alt="Projet 13" loading="lazy"><div class="gov"><p class="gtitle">Motion Design 13</p><span class="gtag">Digital · Motion</span></div></div>
+    <div class="gi" data-c="print"><img src="https://custom-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_limit,fl_lossy,h_9000,w_1920,f_auto,q_auto/23849964/719462_242306.jpeg" alt="Projet 14" loading="lazy"><div class="gov"><p class="gtitle">Visuel Print 14</p><span class="gtag">Print · Poster</span></div></div>
+    <div class="gi" data-c="branding"><img src="https://custom-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_limit,fl_lossy,h_9000,w_1920,f_auto,q_auto/23849964/387460_569859.jpeg" alt="Projet 15" loading="lazy"><div class="gov"><p class="gtitle">Branding Complet 15</p><span class="gtag">Branding · Stratégie</span></div></div>
+  </div>
+</section>
+
+<!-- EXPÉRIENCES -->
+<section id="exp">
+  <div class="egrid">
+    <div class="esb rv">
+      <div class="stag">Parcours Pro</div>
+      <h2 class="st">Postes en <em>Entreprise</em></h2>
+      <p class="eintro">Des solutions de design sur mesure pour répondre à tous vos besoins. De la startup FinTech à la banque panafricaine, j'apporte créativité et rigueur.</p>
+      <div class="sw">
+        <span class="sk">Figma</span><span class="sk">Illustrator</span><span class="sk">Photoshop</span><span class="sk">InDesign</span><span class="sk">Premiere Pro</span><span class="sk">Meta Ads</span><span class="sk">Canva Pro</span><span class="sk">Motion Design</span><span class="sk">Stratégie 360°</span>
+      </div>
+    </div>
+    <div class="elist">
+      <div class="ei rv">
+        <div class="einner">
+          <img class="elogo" src="https://custom-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_limit,fl_lossy,h_9000,w_1200,f_auto,q_1/23849964/91339_286374.png" alt="CCBM">
+          <div><h3 class="eco">CCBM</h3><p class="erole">Digital Content Creator</p></div>
+          <span class="eper">2023 — Présent</span>
+        </div>
+        <p class="edesc">Création de contenus digitaux pour les réseaux sociaux et supports de communication. Développement de la stratégie visuelle et éditoriale de la marque sur l'ensemble des plateformes numériques.</p>
+      </div>
+      <div class="ei rv d1">
+        <div class="einner">
+          <img class="elogo" src="https://custom-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_limit,fl_lossy,h_9000,w_1200,f_auto,q_1/23849964/955973_759349.png" alt="Djamo">
+          <div><h3 class="eco">Djamo</h3><p class="erole">Community Manager &amp; Content Writer</p></div>
+          <span class="eper">2022 — 2023</span>
+        </div>
+        <p class="edesc">Animation et modération des communautés en ligne, rédaction de contenus engageants, suivi des KPIs. Production de visuels et campagnes créatives pour la FinTech leader en Afrique de l'Ouest.</p>
+      </div>
+      <div class="ei rv d2">
+        <div class="einner">
+          <img class="elogo" src="https://custom-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_fill,fl_lossy,h_200,w_200,f_auto,g_faces:auto,q_1/23849964/583723_310829.png" alt="Ecobank">
+          <div><h3 class="eco">Ecobank</h3><p class="erole">Graphic Designer &amp; Assistant Marketing</p></div>
+          <span class="eper">2020 — 2022</span>
+        </div>
+        <p class="edesc">Conception de supports visuels print et digitaux pour les campagnes marketing. Assistance dans la coordination des activités promotionnelles et la gestion de l'image de marque panafricaine.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- À PROPOS -->
+<section id="ap">
+  <div class="agrid">
+    <div class="aimgs rv">
+      <div class="aim"><img src="https://user-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_clip,w_960,h_720,f_auto,q_auto/unsplashcom/photo-1481691342593-9f7336e3fcad" alt="Des débuts modestes" loading="lazy"></div>
+      <div class="ais"><img src="https://user-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_clip,w_960,h_720,f_auto,q_auto/unsplashcom/photo-1482477538080-65fdcf0ed413" alt="Une évolution constante" loading="lazy"></div>
+      <div class="ais"><img src="https://user-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_clip,w_960,h_720,f_auto,q_auto/unsplashcom/photo-1599420186917-468a49a78a63" alt="Centré client" loading="lazy"></div>
+      <div class="abadge"><span class="bnum">5+</span><span class="btext">Années<br>d'exp.</span></div>
+    </div>
+    <div class="ac rv d1">
+      <div class="stag">À Propos</div>
+      <h2 class="st">Créer, c'est ma <em>vocation.</em></h2>
+      <p>Je suis <strong>Mouhamed Kandji</strong>, Graphic Designer &amp; Digital Content Creator avec une forte culture digitale et marketing. Je conçois des identités, des contenus et des supports visuels pensés pour la performance et l'engagement.</p>
+      <div class="aquote"><p>« Mon aventure a commencé avec une simple idée : transformer des concepts en designs percutants. »</p></div>
+      <p>Grâce à mes expériences chez <strong>Djamo</strong>, <strong>CCBM</strong>, <strong>Ecobank</strong> et d'autres structures, j'ai travaillé sur des projets variés incluant branding, social media, campagnes 360° et motion design.</p>
+      <p>Mon approche combine <strong>créativité + stratégie + exécution</strong> pour accompagner efficacement les équipes marketing dans l'atteinte de leurs objectifs.</p>
+      <div style="margin-top:34px;display:flex;gap:13px;flex-wrap:wrap">
+        <a href="#contact" class="bp">Travaillons ensemble →</a>
+        <a href="https://www.behance.net/kandjimouhamed" target="_blank" class="bo">Behance ↗</a>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:96px">
+    <div class="stag rv">Mes engagements</div>
+    <h2 class="st rv">Valeurs <em>Fondamentales</em></h2>
+    <div class="vgrid">
+      <div class="vc rv"><div class="vico">✦</div><h3 class="vname">Qualité</h3><p class="vdesc">Je m'engage à fournir des designs de la plus haute qualité, adaptés aux besoins spécifiques de chaque client.</p></div>
+      <div class="vc rv d1"><div class="vico">◈</div><h3 class="vname">Innovation</h3><p class="vdesc">Je crois en l'innovation continue pour rester à la pointe des tendances et technologies du design.</p></div>
+      <div class="vc rv d2"><div class="vico">○</div><h3 class="vname">Respect des délais</h3><p class="vdesc">Je garantis le respect des délais pour que vos projets soient livrés à temps, sans compromis sur la qualité.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="stag rv">Me joindre</div>
+  <h2 class="st rv">Parlons de votre <em>projet.</em></h2>
+  <div class="cgrid">
+    <div class="ci rv">
+      <h3>Vous avez un projet créatif ou un besoin de communication ? Je suis disponible et à votre écoute pour construire ensemble quelque chose de mémorable.</h3>
+      <div class="clinks">
+        <a href="mailto:kandji148@gmail.com" class="cl"><span class="ci2">✉</span><span>kandji148@gmail.com</span></a>
+        <a href="tel:770221129" class="cl"><span class="ci2">☏</span><span>+221 77 022 11 29</span></a>
+        <a href="https://www.behance.net/kandjimouhamed" target="_blank" class="cl"><span class="ci2">◈</span><span>behance.net/kandjimouhamed</span></a>
+        <a href="#" class="cl"><span class="ci2">⬡</span><span>Dakar, Sénégal</span></a>
+      </div>
+    </div>
+    <form class="cf rv d1" onsubmit="doForm(event)">
+      <div class="fr">
+        <div class="fg"><label>Prénom &amp; Nom</label><input type="text" placeholder="Jean Dupont" required></div>
+        <div class="fg"><label>Email</label><input type="email" placeholder="jean@exemple.com" required></div>
+      </div>
+      <div class="fg">
+        <label>Type de projet</label>
+        <select>
+          <option value="">Sélectionner...</option>
+          <option>Identité Visuelle / Branding</option>
+          <option>Contenus Réseaux Sociaux</option>
+          <option>Community Management</option>
+          <option>Stratégie Digitale</option>
+          <option>Print &amp; Supports</option>
+          <option>Direction Artistique</option>
+          <option>Autre</option>
+        </select>
+      </div>
+      <div class="fg"><label>Message</label><textarea placeholder="Décrivez votre projet, vos attentes..."></textarea></div>
+      <button type="submit" class="bsend">Envoyer →</button>
+      <p id="fok">✓ Message envoyé ! Je vous répondrai dans les 48h.</p>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="flogo">M<span>.</span>Kandji</div>
+  <p class="fcopy">© 2025 — Mouhamed Kandji. Tous droits réservés.</p>
+  <div class="flinks">
+    <a href="https://www.behance.net/kandjimouhamed" target="_blank">Behance</a>
+    <a href="mailto:kandji148@gmail.com">Email</a>
+    <a href="tel:770221129">Appel</a>
+  </div>
+</footer>
+
+<script>
+// CURSOR
+const cur=document.getElementById('cur'),cr=document.getElementById('cur-r');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function t(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;cr.style.left=rx+'px';cr.style.top=ry+'px';requestAnimationFrame(t)})();
+document.querySelectorAll('a,button,.gi,.sc2,.ei,input,textarea,select').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cr.style.width='54px';cr.style.height='54px';cr.style.borderColor='rgba(201,168,76,.85)';cur.style.transform='translate(-50%,-50%) scale(1.5)'});
+  el.addEventListener('mouseleave',()=>{cr.style.width='36px';cr.style.height='36px';cr.style.borderColor='rgba(201,168,76,.5)';cur.style.transform='translate(-50%,-50%) scale(1)'});
+});
+
+// NAV
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('sc',window.scrollY>50));
+
+// REVEAL
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis')}),{threshold:.1});
+document.querySelectorAll('.rv').forEach(r=>obs.observe(r));
+
+// FILTER
+function filterG(btn,cat){
+  document.querySelectorAll('.fb').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const items=[...document.querySelectorAll('.gi')];
+  items.forEach(it=>{
+    const show=cat==='all'||it.dataset.c===cat;
+    it.style.display=show?'':'none';
+  });
+  // Reapply tall to first visible item in each group of 5
+  const vis=items.filter(it=>it.style.display!=='none');
+  items.forEach(it=>it.classList.remove('tall'));
+  vis.forEach((it,i)=>{if(i%5===0)it.classList.add('tall')});
+}
+
+// FORM
+function doForm(e){
+  e.preventDefault();
+  const ok=document.getElementById('fok');
+  ok.style.display='block';
+  e.target.reset();
+  setTimeout(()=>ok.style.display='none',5000);
+}
+
+// SMOOTH SCROLL
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'})}
+  });
+});
+</script>
+</body>
+</html>
